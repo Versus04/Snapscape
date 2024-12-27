@@ -15,10 +15,13 @@ import retrofit2.Response
 
 private const val  apiKey = CONSTANTS.apiKey
 private const val BASE_URL="https://api.unsplash.com/"
+private const val PER_PAGE=10
 interface ApiService {
     @Headers("Authorization: Client-ID ${apiKey}")
     @GET("photos/")
-    suspend fun getPhotos(): Response<List<UnsplashImageDTO>>
+    suspend fun getPhotos(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int = PER_PAGE): Response<List<UnsplashImageDTO>>
 }
 private val retrofit : Retrofit= Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(BASE_URL).build()
 
